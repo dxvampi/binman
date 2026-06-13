@@ -4,14 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "binmanx"
-version = "1.0"
+version = "1.1"
 description = "A simple binary version manager wrapper"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT License"}
 classifiers = [
     "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
 ]
 
 [project.scripts]
