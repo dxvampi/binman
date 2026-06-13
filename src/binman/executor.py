@@ -1,7 +1,7 @@
 import os
 import sys
 from typing import List, Optional
-from src.models import Binary
+from binman.models import Binary
 
 class Executor:
     def __init__(self, binary: Binary, args: Optional[List[str]] = None):

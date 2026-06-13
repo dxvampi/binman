@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from typing import Dict
-from src.models import Binary
+from binman.models import Binary
 
 class ConfigManager:
     def __init__(self):
