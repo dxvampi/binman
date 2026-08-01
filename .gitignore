@@ -1,0 +1,7 @@
+binman
+binman.exe
+*.exe
+
+.vscode/
+
+.DS_Store
