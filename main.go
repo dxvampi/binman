@@ -2,24 +2,42 @@ package main
 
 import (
 	"fmt"
+	"os"
 
-	"github.com/dxvampi/binman/internal/store"
+	"github.com/dxvampi/binman/internal/cmd"
 )
 
 func main() {
-	binaries, err := store.Load()
-	if err != nil {
-		fmt.Println("load error:", err)
+	args := os.Args
+
+	if len(args) < 2 {
+		fmt.Println("usage: binman <command>")
 		return
 	}
 
-	binaries = append(binaries, store.Binary{Alias: "java8", Path: "/usr/lib/jvm/java-8/bin/java"})
+	command := args[1]
 
-	err = store.Save(binaries)
-	if err != nil {
-		fmt.Println("save error:", err)
+	if command == "-b" {
+		if len(args) < 3 {
+			fmt.Println("usage: binman -b <alias> [args...]")
+			return
+		}
+		alias := args[2]
+		extraArgs := args[3:]
+		fmt.Println("running binary with alias:", alias, "and args:", extraArgs)
 		return
 	}
 
-	fmt.Println(binaries)
+	switch command {
+	case "config":
+		cmd.Config()
+	case "list":
+		cmd.List()
+	case "remove":
+		fmt.Println("running remove...")
+	case "help":
+		fmt.Println("running help...")
+	default:
+		fmt.Println("unknown command:", command)
+	}
 }
