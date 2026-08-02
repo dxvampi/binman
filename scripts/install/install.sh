@@ -19,8 +19,10 @@ mkdir -p "$INSTALL_DIR"
 curl -L -o "$INSTALL_DIR/binman" "$url"
 chmod +x "$INSTALL_DIR/binman"
 
-shell_rc="$HOME/.bashrc"
-[ -n "$ZSH_VERSION" ] && shell_rc="$HOME/.zshrc"
+case "$SHELL" in
+  */zsh) shell_rc="$HOME/.zshrc" ;;
+  *) shell_rc="$HOME/.bashrc" ;;
+esac
 
 if ! echo "$PATH" | grep -q "$INSTALL_DIR"; then
   echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >> "$shell_rc"
