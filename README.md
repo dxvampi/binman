@@ -42,6 +42,6 @@ binman -b <alias> [args...]
 
 ### Remove a binary
 
-\`\`\`bash
+```bash
 binman remove
-\`\`\`
+```
