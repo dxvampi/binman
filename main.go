@@ -5,17 +5,14 @@ import (
 	"os"
 
 	"github.com/dxvampi/binman/internal/cmd"
-	"github.com/dxvampi/binman/internal/version"
+	"github.com/dxvampi/binman/internal/updater"
 )
 
 func main() {
 	args := os.Args
 
 	if len(args) < 2 {
-		fmt.Printf("Binman v%s\n", version.Version)
-		fmt.Println("usage: binman <command>")
-		fmt.Println()
-		fmt.Println("Use 'binman help' to see a list of commands")
+		cmd.Help()
 		return
 	}
 
@@ -44,4 +41,11 @@ func main() {
 	default:
 		fmt.Println("unknown command:", command)
 	}
+
+	v, err := updater.FetchLatestVersion()
+	if err != nil {
+		fmt.Println("error:", err)
+		return
+	}
+	fmt.Println("latest version:", v)
 }
