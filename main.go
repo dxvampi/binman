@@ -35,6 +35,12 @@ func main() {
 	}
 
 	switch command {
+	case "which":
+		if len(args) < 3 {
+			fmt.Println("usage: binman which <alias>")
+			return
+		}
+		cmd.Which(args[2])
 	case "config":
 		cmd.Config()
 	case "list":
