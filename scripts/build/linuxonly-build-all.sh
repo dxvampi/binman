@@ -22,5 +22,5 @@ for target in "${targets[@]}"; do
     output="$output.exe"
   fi
   echo "Building $output..."
-  GOOS=$os GOARCH=$arch go build -ldflags "-X binman/internal/version.Version=$VERSION" -o $output
+  GOOS=$os GOARCH=$arch go build -ldflags "-s -w -X binman/internal/version.Version=$VERSION" -o $output
 done
