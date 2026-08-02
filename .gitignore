@@ -3,5 +3,5 @@ binman.exe
 *.exe
 
 .vscode/
-
+binaries.json
 .DS_Store
