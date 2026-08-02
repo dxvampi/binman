@@ -41,6 +41,18 @@ func Config() error {
 			continue
 		}
 
+		exists := false
+		for _, b := range binaries {
+			if b.Alias == alias {
+				exists = true
+				break
+			}
+		}
+
+		if exists {
+			fmt.Printf("Alias '%s' already exists and will be overwritten.\n", alias)
+		}
+
 		fmt.Print("Path: ")
 		path, err := reader.ReadString('\n')
 		if err != nil {
