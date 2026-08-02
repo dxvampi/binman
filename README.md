@@ -48,9 +48,9 @@ binman remove
 
 ### Check for updates
 
-\`\`\`bash
+```bash
 binman update
-\`\`\`
+```
 
 Checks GitHub for a newer release and prompts to install it. BinmanX also checks for updates automatically in the background (at most once every 24 hours) and will prompt you after any command finishes if a new version is found.
 
