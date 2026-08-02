@@ -24,7 +24,7 @@ func main() {
 		}
 		alias := args[2]
 		extraArgs := args[3:]
-		fmt.Println("running binary with alias:", alias, "and args:", extraArgs)
+		cmd.Run(alias, extraArgs)
 		return
 	}
 
@@ -34,7 +34,7 @@ func main() {
 	case "list":
 		cmd.List()
 	case "remove":
-		fmt.Println("running remove...")
+		cmd.Remove()
 	case "help":
 		fmt.Println("running help...")
 	default:

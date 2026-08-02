@@ -43,7 +43,25 @@ func Load() ([]Binary, error) {
 }
 
 func Save(binaries []Binary) error {
-	data, err := json.MarshalIndent(binaries, "", "  ")
+
+	deduped := []Binary{}
+
+	for _, b := range binaries {
+		found := false
+		for i, d := range deduped {
+			if d.Alias == b.Alias {
+				deduped[i].Path = b.Path
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			deduped = append(deduped, b)
+		}
+	}
+
+	data, err := json.MarshalIndent(deduped, "", "  ")
 	if err != nil {
 		return err
 	}
