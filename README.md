@@ -45,3 +45,6 @@ binman -b <alias> [args...]
 ```bash
 binman remove
 ```
+
+## License
+BinmanX is licensed under the [GNU AGPLv3](LICENSE)
