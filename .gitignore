@@ -5,3 +5,5 @@ binman.exe
 .vscode/
 binaries.json
 .DS_Store
+
+dist
