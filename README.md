@@ -46,14 +46,6 @@ binman -b <alias> [args...]
 binman remove
 ```
 
-### Get the path of a binary
-
-```bash
-binman which <alias>
-```
-
-Prints the path for the given alias. Useful for scripting, e.g. `$(binman which java17)`.
-
 ### Check for updates
 
 \`\`\`bash
@@ -66,11 +58,11 @@ Checks GitHub for a newer release and prompts to install it. BinmanX also checks
 
 Requires Go 1.24 or newer.
 
-\`\`\`bash
+```bash
 git clone https://github.com/dxvampi/binman.git
 cd binman
 go build -o binman
-\`\`\`
+```
 
 To cross-compile for other platforms/architectures, see `scripts/build/linuxonly-build-all.sh`.
 
