@@ -46,5 +46,33 @@ binman -b <alias> [args...]
 binman remove
 ```
 
+### Get the path of a binary
+
+```bash
+binman which <alias>
+```
+
+Prints the path for the given alias. Useful for scripting, e.g. `$(binman which java17)`.
+
+### Check for updates
+
+\`\`\`bash
+binman update
+\`\`\`
+
+Checks GitHub for a newer release and prompts to install it. BinmanX also checks for updates automatically in the background (at most once every 24 hours) and will prompt you after any command finishes if a new version is found.
+
+## Building from source
+
+Requires Go 1.24 or newer.
+
+\`\`\`bash
+git clone https://github.com/dxvampi/binman.git
+cd binman
+go build -o binman
+\`\`\`
+
+To cross-compile for other platforms/architectures, see `scripts/build/linuxonly-build-all.sh`.
+
 ## License
 BinmanX is licensed under the [GNU AGPLv3](LICENSE)
