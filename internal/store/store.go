@@ -11,7 +11,14 @@ type Binary struct {
 	Path  string `json:"path"`
 }
 
+var configDir = ""
+
 func configPath() (string, error) {
+
+	if configDir != "" {
+		return filepath.Join(configDir, "config.json"), nil
+	}
+
 	dir, err := os.UserConfigDir()
 	if err != nil {
 		return "", err
