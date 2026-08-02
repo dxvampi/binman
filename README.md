@@ -46,6 +46,14 @@ binman -b <alias> [args...]
 binman remove
 ```
 
+### Get the path of a binary
+
+```bash
+binman which <alias>
+```
+
+Prints the path for the given alias. Useful for scripting, e.g. `$(binman which java17)`.
+
 ### Check for updates
 
 ```bash
