@@ -5,9 +5,22 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"unicode"
 
 	"github.com/dxvampi/binman/internal/store"
 )
+
+func isValidAlias(s string) bool {
+	if s == "" {
+		return false
+	}
+	for _, r := range s {
+		if unicode.IsControl(r) {
+			return false
+		}
+	}
+	return true
+}
 
 func Config() error {
 	binaries, err := store.Load()
@@ -23,6 +36,10 @@ func Config() error {
 			return err
 		}
 		alias = strings.TrimSpace(alias)
+		if !isValidAlias(alias) {
+			fmt.Println("Invalid alias, please use plain text only.")
+			continue
+		}
 
 		fmt.Print("Path: ")
 		path, err := reader.ReadString('\n')
