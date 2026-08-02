@@ -41,6 +41,12 @@ func PromptAndInstall(latest string) error {
 		fmt.Println("Update cancelled")
 		return nil
 	}
+	err := RunInstallScript()
+	if err != nil {
+		return err
+	}
 
-	return RunInstallScript()
+	_ = ClearCache()
+
+	return nil
 }

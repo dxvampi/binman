@@ -131,3 +131,17 @@ func CheckAsync() <-chan string {
 
 	return resultChan
 }
+
+func ClearCache() error {
+	path, err := cachePath()
+	if err != nil {
+		return err
+	}
+
+	err = os.Remove(path)
+	if err != nil && !os.IsNotExist(err) {
+		return err
+	}
+
+	return nil
+}
