@@ -18,6 +18,11 @@ func main() {
 
 	command := args[1]
 
+	var updateChan <-chan string
+	if command != "-b" && command != "update" {
+		updateChan = updater.CheckAsync()
+	}
+
 	if command == "-b" {
 		if len(args) < 3 {
 			fmt.Println("usage: binman -b <alias> [args...]")
@@ -38,14 +43,18 @@ func main() {
 		cmd.Remove()
 	case "help":
 		cmd.Help()
+	case "update":
+		cmd.Update()
 	default:
 		fmt.Println("unknown command:", command)
 	}
 
-	v, err := updater.FetchLatestVersion()
-	if err != nil {
-		fmt.Println("error:", err)
-		return
+	if updateChan != nil {
+		select {
+		case latest := <-updateChan:
+			updater.PromptAndInstall(latest)
+		default:
+		}
 	}
-	fmt.Println("latest version:", v)
+
 }

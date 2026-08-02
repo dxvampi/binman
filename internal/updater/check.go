@@ -5,7 +5,10 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
+
+	"github.com/dxvampi/binman/internal/version"
 )
 
 type Cache struct {
@@ -43,6 +46,31 @@ func cachePath() (string, error) {
 	}
 
 	return filepath.Join(dir, "binman", "last_check.json"), nil
+}
+
+func checkAndCache() (string, error) {
+
+	cache, err := loadCache()
+	if err != nil {
+		return "", err
+	}
+
+	if time.Since(cache.LastChecked) < 24*time.Hour {
+		return cache.Version, nil
+	}
+
+	latest, err := FetchLatestVersion()
+	if err != nil {
+		return "", err
+	}
+
+	latest = strings.TrimPrefix(latest, "v")
+
+	_ = saveCache(Cache{
+		LastChecked: time.Now(),
+		Version:     latest,
+	})
+	return latest, nil
 }
 
 func loadCache() (Cache, error) {
@@ -86,4 +114,20 @@ func saveCache(cache Cache) error {
 	}
 
 	return os.WriteFile(path, data, 0644)
+}
+
+func CheckAsync() <-chan string {
+	resultChan := make(chan string, 1)
+
+	go func() {
+		latest, err := checkAndCache()
+		if err != nil {
+			return
+		}
+		if latest != "" && latest != strings.TrimPrefix(version.Version, "v") {
+			resultChan <- latest
+		}
+	}()
+
+	return resultChan
 }
