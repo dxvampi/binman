@@ -36,7 +36,7 @@ func main() {
 	case "remove":
 		cmd.Remove()
 	case "help":
-		fmt.Println("running help...")
+		cmd.Help()
 	default:
 		fmt.Println("unknown command:", command)
 	}
