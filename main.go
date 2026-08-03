@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/dxvampi/binman/internal/cmd"
+	"github.com/dxvampi/binman/internal/tui"
 	"github.com/dxvampi/binman/internal/updater"
 )
 
@@ -19,7 +20,7 @@ func main() {
 	command := args[1]
 
 	var updateChan <-chan string
-	if command != "-b" && command != "update" {
+	if command != "-b" && command != "update" && command != "tui" {
 		updateChan = updater.CheckAsync()
 	}
 
@@ -41,6 +42,8 @@ func main() {
 			return
 		}
 		cmd.Which(args[2])
+	case "tui":
+		tui.Run()
 	case "config":
 		cmd.Config()
 	case "list":
