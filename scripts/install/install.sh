@@ -1,36 +1,35 @@
-#!/bin/bash
+# Copyright (C) 2026 dxvampi
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+# 
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#!/usr/bin/env bash
+
 set -e
 
-REPO="dxvampi/binman"
-INSTALL_DIR="$HOME/.local/bin"
-os=$(uname -s | tr '[:upper:]' '[:lower:]')
-arch=$(uname -m)
+echo "STEP 1 -> CLONING REPO"
 
-case $arch in
-x86_64) arch="amd64" ;;
-aarch64|arm64) arch="arm64" ;;
-*) echo "Unsupported architecture: $arch"; exit 1 ;;
-esac
+git clone https://codeberg.org/dxvampi/binman.git binman-tmp
+cd binman-tmp
 
-binary_name="binman-$os-$arch"
-url="https://github.com/$REPO/releases/latest/download/$binary_name"
+echo "STEP 2 -> BUILDING"
 
-mkdir -p "$INSTALL_DIR"
-tmp_file="$(mktemp "$INSTALL_DIR/binman.XXXXXX")"
-curl -L -o "$tmp_file" "$url"
-chmod +x "$tmp_file"
-mv "$tmp_file" "$INSTALL_DIR/binman"
+go build -ldflags="-s -w" -o binman .
+go install -ldflags="-s -w" .
 
-case "$SHELL" in
-*/zsh) shell_rc="$HOME/.zshrc" ;;
-*) shell_rc="$HOME/.bashrc" ;;
-esac
+echo "STEP 3 -> DELETING TEMPORAL FILES"
 
-if ! echo "$PATH" | grep -q "$INSTALL_DIR"; then
-echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >> "$shell_rc"
-echo "Restart your terminal or run: source $shell_rc"
-fi
+cd ..
+rm -rf binman-tmp
 
-if [ "$os" == "darwin" ]; then
-xattr -d com.apple.quarantine "$INSTALL_DIR/binman" 2>/dev/null || true
-fi
+echo "binman succesfully installed"

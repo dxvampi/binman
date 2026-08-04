@@ -1,20 +1,33 @@
+# Copyright (C) 2026 dxvampi
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+# 
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 $ErrorActionPreference = "Stop"
 
-$repo = "dxvampi/binman"
-$installDir = "$env:LOCALAPPDATA\binman"
+$repoUrl = "https://codeberg.org/dxvampi/binman.git"
+$cloneDir = "binman-install-tmp"
 
-$arch = if ([Environment]::Is64BitOperatingSystem) { "amd64" } else { "386" }
+Write-Host "STEP 1 -> CLONING REPO"
+git clone $repoUrl $cloneDir
+Set-Location $cloneDir
 
-New-Item -ItemType Directory -Force -Path $installDir | Out-Null
-$url = "https://github.com/$repo/releases/latest/download/binman-windows-$arch.exe"
-$dest = "$installDir\binman.exe"
+Write-Host "STEP 2 -> BUILDING"
+go build -ldflags="-s -w" -o binman.exe .
+go install -ldflags="-s -w" .
 
-Write-Host "Downloading binman..."
-Invoke-WebRequest -Uri $url -OutFile $dest
+echo "STEP 3 -> DELETING TEMPORAL FILES"
+Set-Location ..
+Remove-Item -Recurse -Force $cloneDir
 
-$currentPath = [Environment]::GetEnvironmentVariable("PATH", "User")
-if ($currentPath -notlike "*$installDir*") {
-    [Environment]::SetEnvironmentVariable("PATH", "$currentPath;$installDir", "User")
-    Write-Host "Added $installDir to PATH. Restart your terminal."
-}
-Write-Host "binman installed successfully!"
+Write-Host "binman installed successfully"
