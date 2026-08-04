@@ -7,16 +7,19 @@ A simple binary version manager. Originally built because I wanted to manage mul
 ### Linux / macOS
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/dxvampi/binman/main/scripts/install/install.sh | bash
+curl -fsSL https://codeberg.org/dxvampi/binman/raw/branch/main/scripts/install/install.sh | bash
 ```
 
 ### Windows
 
 ```powershell
-irm https://raw.githubusercontent.com/dxvampi/binman/main/scripts/install/install.ps1 | iex
+irm https://codeberg.org/dxvampi/binman/raw/branch/main/scripts/install/install.ps1 | iex
 ```
 
-> **Note (Windows):** since the binary isn't signed, SmartScreen may show a warning the first time you run it. Click "More info" and then "Run anyway".
+> [!NOTE]
+>**Windows** 
+> since the binary isn't signed, SmartScreen may show a warning the first time you run it. Click "More info" and then "Run anyway".
+
 
 ## Usage
 
