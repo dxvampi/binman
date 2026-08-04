@@ -60,7 +60,7 @@ func Update() {
 
 	switch runtime.GOOS {
 	case "windows":
-		cmd := exec.Command("powershell", "irm", "https://codeberg.org/dxvampi/binman/raw/branch/main/scripts/install.ps1", "|", "iex")
+		cmd := exec.Command("powershell", "irm", "https://codeberg.org/dxvampi/binman/raw/branch/main/scripts/install/install.ps1", "|", "iex")
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		err := cmd.Run()
@@ -69,7 +69,7 @@ func Update() {
 			return
 		}
 	default:
-		cmd := exec.Command("bash", "-c", "curl -fsSL https://codeberg.org/dxvampi/binman/raw/branch/main/scripts/install.sh | bash")
+		cmd := exec.Command("bash", "-c", "curl -fsSL https://codeberg.org/dxvampi/binman/raw/branch/main/scripts/install/install.sh | bash")
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		err := cmd.Run()
