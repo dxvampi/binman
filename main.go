@@ -19,7 +19,7 @@ func main() {
 	command := args[1]
 
 	var updateChan <-chan string
-	if command != "-b" && command != "update" {
+	if command != "-b" && command != "update" && command != "tui" {
 		updateChan = updater.CheckAsync()
 	}
 
