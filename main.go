@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/dxvampi/binman/internal/cmd"
-	"github.com/dxvampi/binman/internal/updater"
 )
 
 func main() {
@@ -17,11 +16,6 @@ func main() {
 	}
 
 	command := args[1]
-
-	var updateChan <-chan string
-	if command != "-b" && command != "update" && command != "tui" {
-		updateChan = updater.CheckAsync()
-	}
 
 	if command == "-b" {
 		if len(args) < 3 {
@@ -49,18 +43,9 @@ func main() {
 		cmd.Remove()
 	case "help":
 		cmd.Help()
-	case "update":
+	case "update", "-U", "--update":
 		cmd.Update()
 	default:
 		fmt.Println("unknown command:", command)
 	}
-
-	if updateChan != nil {
-		select {
-		case latest := <-updateChan:
-			updater.PromptAndInstall(latest)
-		default:
-		}
-	}
-
 }
