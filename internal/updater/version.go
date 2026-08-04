@@ -15,4 +15,4 @@
 
 package updater
 
-const Version = "v1.0"
+const Version = "v1.0.0"
