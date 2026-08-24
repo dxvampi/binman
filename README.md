@@ -78,4 +78,4 @@ go build -o binman
 To cross-compile for other platforms/architectures, see `scripts/build/linuxonly-build-all.sh`.
 
 ## License
-BinmanX is licensed under the [GNU AGPLv3](LICENSE)
+Binman is licensed under the [GNU AGPLv3](LICENSE)
