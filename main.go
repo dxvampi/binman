@@ -36,7 +36,7 @@ func main() {
 		}
 		cmd.Which(args[2])
 	case "config":
-		cmd.Config()
+		cmd.Config(args)
 	case "list":
 		cmd.List()
 	case "remove":

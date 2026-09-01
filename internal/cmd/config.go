@@ -22,11 +22,47 @@ func isValidAlias(s string) bool {
 	return true
 }
 
-func Config() error {
+func Config(args []string) error {
+
 	binaries, err := store.Load()
 	if err != nil {
 		return err
 	}
+
+	if len(args) > 2 && len(args) <= 4 {
+		alias := args[2]
+		alias = strings.TrimSpace(alias)
+		if !isValidAlias(alias) {
+			fmt.Println("Invalid alias, please use plain text only.")
+		}
+
+		exists := false
+		for _, b := range binaries {
+			if b.Alias == alias {
+				exists = true
+				break
+			}
+		}
+
+		if exists {
+			fmt.Printf("Alias '%s' already exists and will be overwritten.\n", alias)
+		}
+
+		path := args[3]
+		path = strings.TrimSpace(path)
+
+		binaries = append(binaries, store.Binary{Alias: alias, Path: path})
+		err = store.Save(binaries)
+		if err != nil {
+			return err
+		}
+		fmt.Println("successfully added aliases!")
+		return nil
+	} else if len(args) == 3 {
+		fmt.Println("usage: binman config <alias> <path>")
+		return fmt.Errorf("invalid command usage %s", args)
+	}
+
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
