@@ -58,7 +58,7 @@ func Config(args []string) error {
 		}
 		fmt.Println("successfully added aliases!")
 		return nil
-	} else if len(args) == 3 {
+	} else if len(args) == 3 || len(args) > 4 {
 		fmt.Println("usage: binman config <alias> <path>")
 		return fmt.Errorf("invalid command usage %s", args)
 	}
