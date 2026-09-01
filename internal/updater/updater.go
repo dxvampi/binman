@@ -21,11 +21,11 @@ import (
 	"net/http"
 )
 
-type Release struct {
-	TagName string `json:"tag_name"`
+type Tag struct {
+	Name string `json:"name"`
 }
 
-const apiURL = "https://codeberg.org/api/v1/repos/dxvampi/binman/releases/latest"
+const apiURL = "https://codeberg.org/api/v1/repos/dxvampi/binman/tags"
 
 func CheckForUpdate() (bool, string, error) {
 	resp, err := http.Get(apiURL)
@@ -38,14 +38,20 @@ func CheckForUpdate() (bool, string, error) {
 		return false, "", fmt.Errorf("unexpected status: %d", resp.StatusCode)
 	}
 
-	var update Release
+	var tags []Tag
 
-	if err = json.NewDecoder(resp.Body).Decode(&update); err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(&tags); err != nil {
 		return false, "", err
 	}
 
-	if update.TagName != Version {
-		return true, update.TagName, nil
+	if len(tags) == 0 {
+		return false, Version, nil
+	}
+
+	latestTag := tags[0].Name
+
+	if latestTag != Version {
+		return true, latestTag, nil
 	}
 	return false, Version, nil
 }
