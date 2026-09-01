@@ -29,7 +29,7 @@ func Config(args []string) error {
 		return err
 	}
 
-	if len(args) > 2 && len(args) <= 4 {
+	if len(args) > 2 && len(args) <= 4 && len(args) != 3 {
 		alias := args[2]
 		alias = strings.TrimSpace(alias)
 		if !isValidAlias(alias) {
