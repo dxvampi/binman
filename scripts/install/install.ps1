@@ -19,7 +19,7 @@ $repoUrl = "https://codeberg.org/dxvampi/binman.git"
 $cloneDir = "binman-install-tmp"
 
 Write-Host "STEP 1 -> CLONING REPO"
-git clone $repoUrl $cloneDir
+git clone -b main $repoUrl $cloneDir
 Set-Location $cloneDir
 
 Write-Host "STEP 2 -> BUILDING"

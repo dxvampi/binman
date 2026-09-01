@@ -19,7 +19,7 @@ set -e
 
 echo "STEP 1 -> CLONING REPO"
 
-git clone https://codeberg.org/dxvampi/binman.git binman-tmp
+git clone -b main https://codeberg.org/dxvampi/binman.git binman-tmp
 cd binman-tmp
 
 echo "STEP 2 -> BUILDING"
