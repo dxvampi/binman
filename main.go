@@ -40,7 +40,7 @@ func main() {
 	case "list":
 		cmd.List()
 	case "remove":
-		cmd.Remove()
+		cmd.Remove(args)
 	case "help":
 		cmd.Help()
 	case "update", "-U", "--update":
