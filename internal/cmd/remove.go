@@ -43,7 +43,7 @@ func Remove(args []string) error {
 		fmt.Printf("Deleted %s\n", alias)
 		return nil
 	} else if len(args) > 3 {
-		fmt.Println("usage: binman config <alias> <path>")
+		fmt.Println("usage: binman remove <alias>")
 		return fmt.Errorf("invalid command usage %s", args)
 	}
 
