@@ -6,12 +6,6 @@ A simple binary version manager. Originally built because I wanted to manage mul
 
 ### Linux / macOS
 
-For people who use **ZSHELL:**
-```bash
-curl -fsSL https://codeberg.org/dxvampi/binman/raw/branch/main/scripts/install/install.sh | zsh
-```
-
-For people who use **BASH:**
 ```bash
 curl -fsSL https://codeberg.org/dxvampi/binman/raw/branch/main/scripts/install/install.sh | bash
 ```
