@@ -32,4 +32,25 @@ echo "STEP 3 -> DELETING TEMPORAL FILES"
 cd ..
 rm -rf binman-tmp
 
-echo "binman succesfully installed"
+echo "STEP 4 -> CONFIGURING PATH"
+
+GOPATH_BIN="$(go env GOPATH)/bin"
+
+case ":$PATH:" in
+    *":$GOPATH_BIN:"*)
+        echo "Go bin already in PATH."
+        ;;
+    *)
+        echo "Adding Go bin to PATH..."
+        for rc in "$HOME/.zshrc" "$HOME/.bashrc"; do
+            if [ -f "$rc" ]; then
+                if ! grep -q "$GOPATH_BIN" "$rc"; then
+                    echo "export PATH=\$PATH:$GOPATH_BIN" >> "$rc"
+                    echo "Configured in: $rc"
+                fi
+            fi
+        done
+        ;;
+esac
+
+echo "binman successfully installed"
