@@ -39,6 +39,7 @@ fi
 echo "STEP 1 -> CLONING REPO"
 
 git clone -b main https://codeberg.org/dxvampi/binman.git binman-tmp
+trap 'echo "Cleaning up..."; rm -rf binman-tmp' EXIT
 cd binman-tmp
 
 echo "STEP 2 -> BUILDING"
@@ -46,12 +47,7 @@ echo "STEP 2 -> BUILDING"
 go build -ldflags="-s -w" -o binman .
 go install -ldflags="-s -w" .
 
-echo "STEP 3 -> DELETING TEMPORAL FILES"
-
-cd ..
-rm -rf binman-tmp
-
-echo "STEP 4 -> CONFIGURING PATH"
+echo "STEP 3 -> CONFIGURING PATH"
 
 GOPATH_BIN="$(go env GOPATH)/bin"
 
