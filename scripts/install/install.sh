@@ -17,6 +17,25 @@
 
 set -e
 
+echo "STEP 0 -> CHECKING DEPENDENCIES"
+if ! command -v git &> /dev/null; then
+    echo "Git is not installed on your system or is not in PATH"
+    exit 1
+fi
+
+if ! command -v go &> /dev/null; then
+    echo "Go is not installed on your system or is not in PATH"
+    exit 1
+fi
+
+GO_VERSION="$(go env GOVERSION | sed 's/go//')"
+MIN_VERSION="1.24"
+
+if [ "$(printf '%s\n%s' "$MIN_VERSION" "$GO_VERSION" | sort -V | head -n1)" != "$MIN_VERSION" ]; then
+    echo "Go version $GO_VERSION is installed, but $MIN_VERSION or higher is required"
+    exit 1
+fi
+
 echo "STEP 1 -> CLONING REPO"
 
 git clone -b main https://codeberg.org/dxvampi/binman.git binman-tmp
