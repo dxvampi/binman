@@ -17,17 +17,41 @@ $ErrorActionPreference = "Stop"
 
 $repoUrl = "https://codeberg.org/dxvampi/binman.git"
 $cloneDir = "binman-install-tmp"
+$minVersion = [version]"1.24"
+
+Write-Host "STEP 0 -> CHECKING DEPENDENCIES"
+
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    Write-Host "Git is not installed on your system or is not in PATH"
+    exit 1
+}
+
+if (-not (Get-Command go -ErrorAction SilentlyContinue)) {
+    Write-Host "Go is not installed on your system or is not in PATH"
+    exit 1
+}
+
+$goVersionRaw = (go env GOVERSION) -replace '^go', ''
+$goVersion = [version]$goVersionRaw
+
+if ($goVersion -lt $minVersion) {
+    Write-Host "Go version $goVersionRaw is installed, but $minVersion or higher is required"
+    exit 1
+}
 
 Write-Host "STEP 1 -> CLONING REPO"
-git clone -b main $repoUrl $cloneDir
-Set-Location $cloneDir
 
-Write-Host "STEP 2 -> BUILDING"
-go build -ldflags="-s -w" -o binman.exe .
-go install -ldflags="-s -w" .
+try {
+    Set-Location $cloneDir
 
-echo "STEP 3 -> DELETING TEMPORAL FILES"
-Set-Location ..
-Remove-Item -Recurse -Force $cloneDir
+    Write-Host "STEP 2 -> BUILDING"
+    go build -ldflags="-s -w" -o binman.exe .
+    go install -ldflags="-s -w" .
 
-Write-Host "binman installed successfully"
+    Write-Host "binman installed successfully"
+}
+finally {
+    Write-Host "Cleaning up..."
+    Set-Location ..
+    Remove-Item -Recurse -Force $cloneDir
+}
