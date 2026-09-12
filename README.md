@@ -1,3 +1,4 @@
+![Binman logo](./binmanlogo.svg)
 # Binman
 
 A simple binary version manager. Originally built because I wanted to manage multiple Java versions on the same Linux system for Minecraft servers, and was kind of tedious.
