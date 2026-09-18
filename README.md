@@ -32,6 +32,11 @@ binman config
 
 Prompts for an alias and a path to a binary. You can add more than one at once
 
+```bash
+binman config <alias> <path>
+```
+One-line command to configure a new alias
+
 ### List aliases
 
 ```bash
@@ -49,7 +54,12 @@ binman -b <alias> [args...]
 ```bash
 binman remove
 ```
+Prompts for an alias name
 
+```bash
+binman remove <alias>
+```
+One-line command for deleting aliases
 ### Get the path of a binary
 
 ```bash
@@ -61,7 +71,7 @@ Prints the path for the given alias. Useful for scripting, e.g. `$(binman which 
 ### Check for updates
 
 ```bash
-binman update
+binman update || binman -U || binman --update
 ```
 
 Checks GitHub for a newer release and prompts to install it. BinmanX also checks for updates automatically in the background (at most once every 24 hours) and will prompt you after any command finishes if a new version is found.
@@ -76,7 +86,7 @@ cd binman
 go build -o binman
 ```
 
-To cross-compile for other platforms/architectures, see `scripts/build/linuxonly-build-all.sh`.
+To cross-compile for other platforms/architectures, see `scripts/build/linuxonly-build-all.sh` as a placeholder.
 
 ## License
 Binman is licensed under the [GNU AGPLv3](LICENSE)
